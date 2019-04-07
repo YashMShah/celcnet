@@ -11,21 +11,21 @@
 	
 	function evalExpr(form) {
 	
-	if(form.input1.value.trim() === "" && form.input2.value.trim() === "" && form.input3.value.trim() === "" && form.input4.value.trim() === "" && form.input5.value.trim() === "") {
-                alert("You Must Enter Atleast One Expression.");
+	if(form.expr1.value.length == 0 && form.expr2.value.length == "" && form.expr3.value.length == 0 && form.expr4.value.length == 0 && form.expr5.value.length == 0) {
+                alert("Atleast one experience is required.");
                 return false;
             }
 	var exprInputs= [];
 	
 	for (let i = 1; i < 6; i++) {
-                var input = "input"+i;
+                var expressions = "expr"+i;
 
-                if (form[input].value !== "") {
-                    if ((/^[^\s@]+\.$/.test(form[input].value)) === false) {
-                        alert("The end of input is marked with a period mark");
+                if (form[expressions].value !== "") {
+                    if ((/^[^\s@]+\.$/.test(form[expressions].value)) === false) {
+                        alert("The input expressions must end with period mark.");
                         return false;
                     }
-                    exprInputs.push(form[input].value);
+                    exprInputs.push(form[expressions].value);
                 }
             }
 			I(exprInputs);
@@ -160,32 +160,26 @@ transform: rotate(-330deg);
 <div class="form1">
 <form onsubmit= "evalExpr(this); return false">
 <h4> Enter Expressions </h4>
-<label for="text">Input expression 1:</label>
-<input type="text" name="input1" id="input1">
+<label for="text">Expression 1:</label>
+<input type="text" name="expr1" id="input1">
 <br>
-<label for="text">Input expression 2:</label>
-<input type="text" name="input2" id="input2">
+<label for="text">Expression 2:</label>
+<input type="text" name="expr2" id="input2">
 <br>
-<label for="text">Input expression 3:</label>
-<input type="text" name="input3" id="input3">
+<label for="text">Expression 3:</label>
+<input type="text" name="expr3" id="input3">
 <br>
-<label for="text">Input expression 4:</label>
-<input type="text" name="input4" id="input4">
+<label for="text">Expression 4:</label>
+<input type="text" name="expr4" id="input4">
 <br>
-<label for="text">Input expression 5:</label>
-<input type="text" name="input5" id="input5">
+<label for="text">Expression 5:</label>
+<input type="text" name="expr5" id="input5">
 <br>
 <input type= "submit" value = "submit"></input>
 </div>
 </form>
 <br>
 
-<svg width= "300" height= "300">
-  <g>
-    <rect x="5000" y="500" width="100" height="100" fill="red"></rect>
-    <text id= "Iinput" x="30" y="50" font-family="Verdana" font-size="25" fill="blue"></text>
-  </g>
-</svg>
 <div class="IMachine"></div>
 <div class="AMachine"></div>
 <div class="EMachine"></div>
@@ -194,75 +188,54 @@ transform: rotate(-330deg);
 <div class="PMachine"></div>
 
 
-<div class="row">
             <div class="IMachine">
                 Input Machine<br>
-                <span id="Ii-expr">Machine I</span>
+                <span id="Iinput">Machine I</span>
                 <br><br>
-                <span id="Io-expr">Machine I output</span>
+                <span id="Ioutput">Machine I output</span>
             </div>
-            <div class="line" id="IA"></div>
+            <div class="line" id="ITOA"></div>
             <div class="AMachine">
                 Assignment Machine<br>
-                <span id="Ai-expr">Machine A Input</span>
+                <span id="Ainput">Machine A Input</span>
                 <br><br>
-                <span id="Ao-expr">Machine A Output</span>
+                <span id="Aoutput">Machine A Output</span>
             </div>
-            <div class="line1" id="AE"></div>
+            <div class="line1" id="ATOE"></div>
             <div class="EMachine">
                 Expression Machine<br>
-                <span id="E-expr">Machine E</span><br><br>
-                <span id="Eo-expr">Machine E</span>
+                <span id="Einput">Machine E</span><br><br>
+                <span id="Eoutput">Machine E</span>
             </div>
         </div>
         <div class="row">
             <div class="col-9"></div>
-            <div class="line2" id="ET1"></div>
-            <div class="line3" id="ET2"></div>
+            <div class="line2" id="ETOT1"></div>
+            <div class="line3" id="ETOT2"></div>
         </div>
-        <div class="row">
-                <div class="col-7"></div>
+        
                 <div class="T1Machine">
                     Term 1<br>
-                    <span id="T1-expr">Machine T1</span>
+                    <span id="T1input">Machine T1</span>
                     <br><br>
-                    <span id="T1o-expr"></span>
+                    <span id="T1output"></span>
                 </div>
-                <div class="col-1"></div>
+                
                 <div class="T2Machine">
                     Term 2<br>
-                    <span id="T2-expr">Machine T2</span>
+                    <span id="T2input">Machine T2</span>
                     <br><br>
-                    <span id="T2o-expr"></span>
+                    <span id="T2output"></span>
                 </div>
-        </div>
-        <div class="row">
-            <div class="line4"></div>
-            <div class="line5"></div>
-            <div class="col-8"></div>
-            <div class="col-1 vr_line" id="T1P">
-                <span class="t1d_line" id="T1D"></span>
-            </div>
-            <div class="col-1"></div>
-            <div class="col-1"></div>
-            <div class="col-1 vl_line" id="T2P">
-                <span class="t2d_line" id="T2D"></span>
-            </div>
-        </div>
-        <div class="row">
-            <!-- <div class="col-4"></div> -->
-            <!-- <div class="col-3"> -->
-                <!-- Data Machine<br> -->
-                <!-- <span id="Di-expr">Machine D</span> -->
-            <!-- </div> -->
-            <!-- <div class="col-1 hline" style="border-bottom: 1px dashed black; " id="PD"></div> -->
+   
+            <div class="line4" id="T1TOP"></div>
+            <div class="line5"  id="T2TOP"></div>
+       
             <div class="PMachine">
                 Power Machine<br>
-                <span id="Pi-expr">Machine P</span>
+                <span id="Pinput">Machine P</span>
                 <br><br>
-                <span id="Po-expr">Machine P</span>
+                <span id="Poutput">Machine P</span>
             </div>            
-        </div>
-    </div>
 </body>
 </html>
