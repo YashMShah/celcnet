@@ -83,7 +83,8 @@ var currentWait = (new Date()).getTime();
 
               let lhsrhs = test.split('=');
       console.log(lhsrhs);
-      setTimeout(function(){document.getElementById("Ai-expr").textContent= 'Inside A machine sending to E:' +lhsrhs[1];},getWaitTime());
+      setTimeout(function(){
+          document.getElementById("Ai-expr").textContent= 'Inside A machine sending to E:' +lhsrhs[1];},getWaitTime());
 
               EVI.push(lhsrhs[1]);
               E();
