@@ -9,7 +9,8 @@ class D {
       this.variable1[key] = value;
     }
   }
-  
+  var wait = 1000;
+var currentWait = (new Date()).getTime();
   var d = new D();
   var IVI = [];
   var IVO = [];
@@ -23,17 +24,8 @@ class D {
   var T2VI = [];
   var T2VO = [];
   var PVI = [];
-/*  $(document).ready(function () {
-  
-      initdata();
-      var input = [];
-      input.push('Z=5*X^2+7*Y^3+X*Y') //Z = 215, when {x = 2, y = 3} 
-      input.push('A=Z*2+100')//A=530, from previous Z(107)
-      I(input);
-  });*/
   initdata();  
   function initdata(){
-  //var d = new D();
   d.set("A",1);
   d.set("B",2);
   d.set("C",3);
@@ -67,46 +59,43 @@ class D {
           statement.forEach((expression) => {
               IVI.push(expression);
               console.log(IVI);
-              //alert("Printing Statement" + expression);
           })
           while (!IVI.length < 1 || !IVI == undefined) {
               var expre = IVI.shift();
-           //alert('Inside I machine sending to A: ' + expre);
-           console.log("insideaaaaa");
-              setTimeout(function(){document.getElementById("Ii-expr").textContent=expre;},2000);
+           console.log(expre);
               AVI.push(expre);
               console.log(AVI);
-			  //sleep(5000);
-              A();
+		       A();
               
               
               
               var sum = IVO.shift();
-             // alert('Inside I machine and we got back: ' + sum);
-              setTimeout(function(){document.getElementById("Io-expr").textContent=sum;},4000);
           }
       }
       
       function A(){
-          
+          //var i =0 ;
           while(!AVI.length < 1 || !AVI == undefined){
-              console.log('insideA');
-              let lhsrhs = AVI.shift().split('=');
-      //        alert('Inside A machine sending to E:' + lhsrhs[1]);
-      setTimeout(function(){document.getElementById("Ai-expr").textContent=lhsrhs[1];},6000);
+            let test = AVI.shift();
+            setTimeout(function(){document.getElementById("Ii-expr").textContent='Inside I machine sending to A: ' +test;},getWaitTime());
+                
+            console.log(test);
+
+              let lhsrhs = test.split('=');
+      console.log(lhsrhs);
+      setTimeout(function(){document.getElementById("Ai-expr").textContent= 'Inside A machine sending to E:' +lhsrhs[1];},getWaitTime());
 
               EVI.push(lhsrhs[1]);
               E();
-              
-              console.log('avo=' + AVO);
+
+
+             console.log('avo=' + AVO);
               var sum = AVO.shift();
               IVO.push(sum);
-              //console.log()
-        //      alert('Inside A machine setting ' + lhsrhs[0] + " to " + sum);
-      setTimeout(function(){document.getElementById("Ao-expr").textContent=sum;},8000);
+         setTimeout(function(){document.getElementById("Ao-expr").textContent='Inside A machine setting ' + lhsrhs[0] + " to " +sum;},getWaitTime());
 
               d.set(lhsrhs[0], sum);
-              
+              setTimeout(function(){document.getElementById("Io-expr").textContent= 'Inside I machine and we got back: '+sum;},getWaitTime());
           }
           
           
@@ -115,7 +104,6 @@ class D {
       function E(){
           while(!EVI.length < 1 || !EVI == undefined){
               
-              // check for free machine
               
               let terms = EVI.shift().split('+');
               explen = terms.length;
@@ -125,27 +113,23 @@ class D {
               terms.forEach((term) => {
                   console.log("term sent is " + term)
                   if (counter % 2 != 0) {
-          //            alert('Inside E sending to T1: ' + term);
-				 setTimeout(function(){ document.getElementById("E-expr").textContent=term;},10000);
+          		 setTimeout(function(){ document.getElementById("E-expr").textContent= 'Inside E sending to T1: ' +term;},getWaitTime());
 
                       T1VI.push(term);
                       T1()
                   } else {
-            //          alert('Inside E sending to T2: ' + term);
-            setTimeout(function(){document.getElementById("E-expr").textContent=term;},10000);
+            setTimeout(function(){document.getElementById("E-expr").textContent='Inside E sending to T2: ' + term;},getWaitTime());
 
                       T2VI.push(term);
                       T2();
                   }
                   counter++;
               })
-              //return;
-              
+        
               
           }
           
           while (!EVO.length < 1 || !EVO == undefined) {
-              //console.log("size is " + this.oQueueE.messages())
               console.log('inside second while E');
               let sum = 0;
               if (EVO.length == explen) {
@@ -157,8 +141,7 @@ class D {
                   break;
               }
               AVO.push(sum);
-              //alert('Inside E machine sending back ' + sum);
-              setTimeout(function(){document.getElementById("Eo-expr").textContent=sum;},12000);
+              setTimeout(function(){document.getElementById("Eo-expr").textContent='Inside E machine sending back ' + sum;},getWaitTime());
 
               
           }
@@ -171,7 +154,6 @@ class D {
       }
       
       function T1(){
-          console.log("Inside T1");
           while(!T1VI.length < 1 || !T1VI == undefined){
               let term = T1VI.shift();
               console.log("term is " + term)
@@ -182,24 +164,19 @@ class D {
                   if (!isNaN(factors[i])) {
                       resultMul = resultMul * factors[i];
                   } else if (factors[i].length > 1) {
-                //      alert('Inside T1 machine sending to P machine: ' + factors[i]);
-              setTimeout(function(){ document.getElementById("T1-expr").textContent=factors[i];},14000);
+              setTimeout(function(){ document.getElementById("T1-expr").textContent='Inside T1 machine sending to P machine: ' +factors[i];},getWaitTime());
                       PVI.push(factors[i])
                       P(1);
                       
                       console.log("Out of P with x = 4  ");
-                      // need to change
                       resultMul = resultMul * T1VO.shift();
                       console.log("result is " + resultMul);
-                      // resultMul = resultMul * this.P();
                   } else {
                       resultMul = resultMul * d.gett(factors[i]);
                   }
               }
-              //alert('Inside T1 machine sending back ' + resultMul);
-             setTimeout(function(){ document.getElementById("T1o-expr").textContent=resultMul;},16000);
+             setTimeout(function(){ document.getElementById("T1o-expr").textContent='Inside T1 machine sending back ' + resultMul;},getWaitTime());
               EVO.push(resultMul);
-              //E();
               return;
           
           }
@@ -207,10 +184,8 @@ class D {
       }
       
       function T2(){
-          console.log("Inside T2");
           while(!T2VI.length < 1 || !T2VI == undefined){
               let term = T2VI.shift();
-              console.log("term is " + term)
               let factors = term.split('*');
               let resultMul = 1;
               
@@ -218,21 +193,17 @@ class D {
                   if (!isNaN(factors[i])) {
                       resultMul = resultMul * factors[i];
                   } else if (factors[i].length > 1) {
-                //     alert('Inside T1 machine sending to P machine: ' + factors[i]);
-               setTimeout(function(){ document.getElementById("T2-expr").textContent=factors[i];},18000);
+               setTimeout(function(){ document.getElementById("T2-expr").textContent='Inside T1 machine sending to P machine: ' + factors[i];},getWaitTime());
                       PVI.push(factors[i])
                       P(2);
                       resultMul = resultMul * T2VO.shift();
                       console.log("result is " + resultMul);
-                      // resultMul = resultMul * this.P();
                   } else {
                       resultMul = resultMul * d.gett(factors[i]);
                   }
               }
-              //alert('Inside T2 machine sending back ' + resultMul);
-             setTimeout(function(){ document.getElementById("T2o-expr").textContent=resultMul;},20000);
+             setTimeout(function(){ document.getElementById("T2o-expr").textContent= 'Inside T2 machine sending back ' +resultMul;},getWaitTime());
               EVO.push(resultMul);
-              //E();
               return;
           
           }
@@ -241,8 +212,6 @@ class D {
       
   function P(variable){
       while(!PVI.length < 1 || !PVI == undefined){
-          //console.log('factor is ' + this.iQueueP.front())
-          //console.log(PVI.shift());
           let numPow = PVI.shift().split('^');
           let val = 0;
           console.log("calc power for " + numPow[0] + " ^ " + numPow[1])
@@ -260,19 +229,20 @@ class D {
                   T2VO.push(val);
               }
               
-              //alert('Inside P machine sending back: ' + val);
-	  setTimeout(function(){document.getElementById("Pi-expr").textContent=val;},22000);
+      setTimeout(function(){document.getElementById("Pi-expr").textContent='Inside P machine sending back: ' + val;},getWaitTime());
               return;
               
       }
   }	
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
+  function getWaitTime() {
+    var now = (new Date()).getTime();
+    //If we passed the current wait time, then wait from now
+    if(now > currentWait) {
+        currentWait = now + wait;
     }
-  }
-    //alert("woke up!");
+    //A set time is still ongoing, then wait when that is completed
+    else {
+        currentWait = currentWait + wait;
+    }
+    return currentWait - now;
 }
-  
