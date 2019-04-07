@@ -7,7 +7,7 @@ Team Members:
 
 -----------------------------------------------------------------------------
 
-This is an Web Application developed usiong HTML, CSS and Javascript to
+This is a Web Application developed usiong HTML, CSS and Javascript to
 show functioning of multiple machines with different functionalities to 
 evaluate an expression. Basic mathematical formulae with assigned priorities
 using the BODMAS rule, however, paranthesis are not used in this program.
