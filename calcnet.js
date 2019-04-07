@@ -9,6 +9,8 @@ class D {
       this.variable1[key] = value;
     }
   }
+  var colorb = '#0000FF';
+  var colorr = '#FF0000';
   var wait = 1000;
 var currentWait = (new Date()).getTime();
   var d = new D();
@@ -77,34 +79,56 @@ var currentWait = (new Date()).getTime();
           //var i =0 ;
           while(!AVI.length < 1 || !AVI == undefined){
             let test = AVI.shift();
-            setTimeout(function(){document.getElementById("Ii-expr").textContent='Inside I machine sending to A: ' +test;},getWaitTime());
+            setTimeout(function(){
+				document.getElementById("Iinput").textContent='Sending to A: ' +test;},TimeOut());
                 
             console.log(test);
 
               let lhsrhs = test.split('=');
       console.log(lhsrhs);
+	  
+	  setTimeout(function(){document.getElementById("ITOA").style.borderColor = colorb},TimeOut());
+ 
       setTimeout(function(){
-          document.getElementById("Ai-expr").textContent= 'Inside A machine sending to E:' +lhsrhs[1];},getWaitTime());
+		  document.getElementById("Ainput").textContent= 'Sending to E:' +lhsrhs[1];
+	  },TimeOut());
+	  
+	  setTimeout(function(){document.getElementById("ITOA").style.borderColor = colorr},TimeOut());
+ 
+	  
+	  
+	  setTimeout(function(){
+				document.getElementById("ITOA").style.borderColor = colorr;
+				document.getElementById("ATOE").style.borderColor = colorb;
+				},TimeOut());
+			
 
               EVI.push(lhsrhs[1]);
               E();
-
+				 setTimeout(function(){document.getElementById("ATOE").style.borderColor = colorr},TimeOut());
+ 
 
              console.log('avo=' + AVO);
               var sum = AVO.shift();
               IVO.push(sum);
-         setTimeout(function(){document.getElementById("Ao-expr").textContent='Inside A machine setting ' + lhsrhs[0] + " to " +sum;},getWaitTime());
+         setTimeout(function(){
+			 
+			 document.getElementById("Aoutput").textContent='Setting ' + lhsrhs[0] + " to " +sum;
+			 },TimeOut());
 
               d.set(lhsrhs[0], sum);
-              setTimeout(function(){document.getElementById("Io-expr").textContent= 'Inside I machine and we got back: '+sum;},getWaitTime());
-          }
+			   setTimeout(function(){document.getElementById("ITOA").style.borderColor = colorb},TimeOut());
+				setTimeout(function(){document.getElementById("ITOA").style.borderColor = colorr},TimeOut());
+ 
+              setTimeout(function(){document.getElementById("Ioutput").textContent= 'Answer Received: '+sum;},TimeOut());
+			
+		  }
           
           
       }
       
       function E(){
           while(!EVI.length < 1 || !EVI == undefined){
-              
               
               let terms = EVI.shift().split('+');
               explen = terms.length;
@@ -114,15 +138,30 @@ var currentWait = (new Date()).getTime();
               terms.forEach((term) => {
                   console.log("term sent is " + term)
                   if (counter % 2 != 0) {
-          		 setTimeout(function(){ document.getElementById("E-expr").textContent= 'Inside E sending to T1: ' +term;},getWaitTime());
+          		 setTimeout(function(){
+					 document.getElementById("Einput").textContent= 'Sending to T1: ' +term;
+					 document.getElementById("ITOA").style.borderColor = colorr;
+					 document.getElementById("ATOE").style.borderColor = colorb;
+					 },TimeOut());
+	
+					 setTimeout(function(){document.getElementById("ATOE").style.borderColor = colorr},TimeOut());
 
                       T1VI.push(term);
                       T1()
+					 setTimeout(function(){document.getElementById("ETOT1").style.borderColor = colorr},TimeOut());
+ 
                   } else {
-            setTimeout(function(){document.getElementById("E-expr").textContent='Inside E sending to T2: ' + term;},getWaitTime());
+            setTimeout(function(){
+				document.getElementById("Einput").textContent='Sending to T2: ' + term;
+				},TimeOut());
+				
+					 setTimeout(function(){document.getElementById("ATOE").style.borderColor = colorr;document.getElementById("ETOT2").style.borderColor = colorb;},TimeOut());
+
 
                       T2VI.push(term);
                       T2();
+					  setTimeout(function(){document.getElementById("ETOT2").style.borderColor = colorr},TimeOut());
+ 
                   }
                   counter++;
               })
@@ -131,7 +170,6 @@ var currentWait = (new Date()).getTime();
           }
           
           while (!EVO.length < 1 || !EVO == undefined) {
-              console.log('inside second while E');
               let sum = 0;
               if (EVO.length == explen) {
                   while (!EVO.length < 1 || !EVO == undefined) {
@@ -142,13 +180,17 @@ var currentWait = (new Date()).getTime();
                   break;
               }
               AVO.push(sum);
-              setTimeout(function(){document.getElementById("Eo-expr").textContent='Inside E machine sending back ' + sum;},getWaitTime());
+              setTimeout(function(){document.getElementById("Eoutput").textContent='Sending Return: ' + sum;},TimeOut());
 
               
           }
           
-          
+          setTimeout(function(){document.getElementById("ATOE").style.borderColor = colorr},TimeOut());
+ 
+			  setTimeout(function(){document.getElementById("ATOE").style.borderColor = colorb},TimeOut());
+ 
           return;
+		  
           
           
           
@@ -160,15 +202,40 @@ var currentWait = (new Date()).getTime();
               console.log("term is " + term)
               let factors = term.split('*');
               let resultMul = 1;
-              
+              setTimeout(function(){
+					 
+					 document.getElementById("ETOT1").style.borderColor = colorb;
+    				 },TimeOut());
               for (let i = 0; i < factors.length; i++) {
                   if (!isNaN(factors[i])) {
                       resultMul = resultMul * factors[i];
                   } else if (factors[i].length > 1) {
-              setTimeout(function(){ document.getElementById("T1-expr").textContent='Inside T1 machine sending to P machine: ' +factors[i];},getWaitTime());
+					  
+				
+              setTimeout(function(){
+				  document.getElementById("T1input").textContent='Sending to P machine: ' +factors[i];
+				  },TimeOut());
+				
+				setTimeout(function(){document.getElementById("ETOT1").style.borderColor = colorr;
+				  },TimeOut());
+				  
+				setTimeout(function(){document.getElementById("T2TOP").style.borderColor = colorb;
+				  },TimeOut());
+				  
+				  
+				setTimeout(function(){document.getElementById("T2TOP").style.borderColor = colorr;
+				  },TimeOut());
+				  
                       PVI.push(factors[i])
                       P(1);
                       
+				setTimeout(function(){document.getElementById("T2TOP").style.borderColor = colorb;
+				  },TimeOut());
+				  
+				  setTimeout(function(){document.getElementById("T2TOP").style.borderColor = colorr;
+				  },TimeOut());
+				
+				
                       console.log("Out of P with x = 4  ");
                       resultMul = resultMul * T1VO.shift();
                       console.log("result is " + resultMul);
@@ -176,8 +243,12 @@ var currentWait = (new Date()).getTime();
                       resultMul = resultMul * d.gett(factors[i]);
                   }
               }
-             setTimeout(function(){ document.getElementById("T1o-expr").textContent='Inside T1 machine sending back ' + resultMul;},getWaitTime());
+             setTimeout(function(){ document.getElementById("T1output").textContent='Sending Return: ' + resultMul;},TimeOut());
               EVO.push(resultMul);
+			  setTimeout(function(){document.getElementById("ETOT1").style.borderColor = colorr},TimeOut());
+ 
+			  setTimeout(function(){document.getElementById("ETOT1").style.borderColor = colorb},TimeOut());
+ 
               return;
           
           }
@@ -194,17 +265,40 @@ var currentWait = (new Date()).getTime();
                   if (!isNaN(factors[i])) {
                       resultMul = resultMul * factors[i];
                   } else if (factors[i].length > 1) {
-               setTimeout(function(){ document.getElementById("T2-expr").textContent='Inside T1 machine sending to P machine: ' + factors[i];},getWaitTime());
+               setTimeout(function(){ 
+			   document.getElementById("T2input").textContent='Sending to P machine: ' + factors[i];
+			   },TimeOut());
+			   
+			   setTimeout(function(){document.getElementById("ETOT2").style.borderColor = colorr;
+				  },TimeOut());
+				  
+				setTimeout(function(){document.getElementById("T1TOP").style.borderColor = colorb;
+				  },TimeOut());
+				  
+				  
+				setTimeout(function(){document.getElementById("T1TOP").style.borderColor = colorr;
+				  },TimeOut());
+				
                       PVI.push(factors[i])
                       P(2);
+					  
+					  setTimeout(function(){document.getElementById("T1TOP").style.borderColor = colorb;
+				  },TimeOut());
+				  
+				  setTimeout(function(){document.getElementById("T1TOP").style.borderColor = colorr;
+				  },TimeOut());
                       resultMul = resultMul * T2VO.shift();
                       console.log("result is " + resultMul);
                   } else {
                       resultMul = resultMul * d.gett(factors[i]);
                   }
               }
-             setTimeout(function(){ document.getElementById("T2o-expr").textContent= 'Inside T2 machine sending back ' +resultMul;},getWaitTime());
+	         setTimeout(function(){ document.getElementById("T2output").textContent= 'Sending Return: ' +resultMul;},TimeOut());
               EVO.push(resultMul);
+			  setTimeout(function(){document.getElementById("ETOT2").style.borderColor = colorr},TimeOut());
+ 
+			  setTimeout(function(){document.getElementById("ETOT2").style.borderColor = colorb},TimeOut());
+ 
               return;
           
           }
@@ -224,18 +318,20 @@ var currentWait = (new Date()).getTime();
                   val = Math.pow(numPow[0], numPow[1]);
               }
           if(variable == 1) {
+			  
                   T1VO.push(val);
               }
               else {
+				
                   T2VO.push(val);
               }
               
-      setTimeout(function(){document.getElementById("Pi-expr").textContent='Inside P machine sending back: ' + val;},getWaitTime());
+      setTimeout(function(){document.getElementById("Pinput").textContent='Sending Return: ' + val;},TimeOut());
               return;
               
       }
   }	
-  function getWaitTime() {
+  function TimeOut() {
     var now = (new Date()).getTime();
     //If we passed the current wait time, then wait from now
     if(now > currentWait) {
