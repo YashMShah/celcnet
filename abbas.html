@@ -5,11 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Calc Net</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="calcnet.js"></script>
 	
 	<script type= "text/javascript">
@@ -39,11 +34,70 @@
 	
 	
 	</script>
-	
+	<style>
+        .IMachine {
+    position: absolute;
+  outline: 1px solid blue;
+  height: 200px;
+  width: 200px;
+  top: 10px;
+  left: 10px;
+}
+
+.AMachine {
+  position: absolute;
+outline: 1px solid blue;
+ height: 200px;
+  width: 200px;
+  top: 10px;
+  left: 300px;
+}
+
+.EMachine {
+  position: absolute;
+   height: 200px;
+  width: 200px;
+outline: 1px solid blue;
+  top: 10px;
+  left: 600px;
+}
+
+.T1Machine {
+  position: absolute;
+   height: 100px;
+  width: 200px;
+outline: 1px solid green;
+  top: 300px;
+  left: 80px;
+}
+
+.T2Machine {
+  position: absolute;
+   height: 100px;
+  width: 200px;
+outline: 1px solid green;
+  top: 300px;
+  left: 550px;
+}
+
+.PMachine {
+  position: absolute;
+   height: 100px;
+  width: 200px;
+outline: 1px solid green;
+  top: 450px;
+  left: 300px;
+}
+.form1{
+    position: absolute;
+    top: 10px;
+    left: 1000px;
+}
+    </style>
 </head>
 <html>
 <body>
-<div>
+<div class="form1">
 <form onsubmit= "evalExpr(this); return false">
 <h4> Enter Expressions </h4>
 <label for="text">Input expression 1:</label>
@@ -62,7 +116,7 @@
 <input type="text" name="input5" id="input5">
 <br>
 <input type= "submit" value = "submit"></input>
-
+</div>
 </form>
 <br>
 
@@ -72,23 +126,30 @@
     <text id= "Iinput" x="30" y="50" font-family="Verdana" font-size="25" fill="blue"></text>
   </g>
 </svg>
+<div class="IMachine"></div>
+<div class="AMachine"></div>
+<div class="EMachine"></div>
+<div class="T1Machine"></div>
+<div class="T2Machine"></div>
+<div class="PMachine"></div>
+
 
 <div class="row">
-            <div class="col-3">
+            <div class="IMachine">
                 Input Machine<br>
                 <span id="Ii-expr">Machine I</span>
                 <br><br>
                 <span id="Io-expr">Machine I output</span>
             </div>
             <div class="col-1 hline" id="IA"></div>
-            <div class="col-3">
+            <div class="AMachine">
                 Assignment Machine<br>
                 <span id="Ai-expr">Machine A Input</span>
                 <br><br>
                 <span id="Ao-expr">Machine A Output</span>
             </div>
             <div class="col-1 hline" id="AE"></div>
-            <div class="col-3">
+            <div class="EMachine">
                 Expression Machine<br>
                 <span id="E-expr">Machine E</span><br><br>
                 <span id="Eo-expr">Machine E</span>
@@ -101,14 +162,14 @@
         </div>
         <div class="row">
                 <div class="col-7"></div>
-                <div class="col-2">
+                <div class="T1Machine">
                     Term 1<br>
                     <span id="T1-expr">Machine T1</span>
                     <br><br>
                     <span id="T1o-expr"></span>
                 </div>
                 <div class="col-1"></div>
-                <div class="col-2">
+                <div class="T2Machine">
                     Term 2<br>
                     <span id="T2-expr">Machine T2</span>
                     <br><br>
@@ -127,13 +188,13 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-4"></div>
-            <div class="col-3">
-                Data Machine<br>
-                <span id="Di-expr">Machine D</span>
-            </div>
-            <div class="col-1 hline" style="border-bottom: 1px dashed black; " id="PD"></div>
-            <div class="col-3">
+            <!-- <div class="col-4"></div> -->
+            <!-- <div class="col-3"> -->
+                <!-- Data Machine<br> -->
+                <!-- <span id="Di-expr">Machine D</span> -->
+            <!-- </div> -->
+            <!-- <div class="col-1 hline" style="border-bottom: 1px dashed black; " id="PD"></div> -->
+            <div class="PMachine">
                 Power Machine<br>
                 <span id="Pi-expr">Machine P</span>
                 <br><br>
