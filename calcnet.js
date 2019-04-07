@@ -9,6 +9,8 @@ class D {
       this.variable1[key] = value;
     }
   }
+  var colorb = '#0000FF';
+  var colorr = '#FF0000';
   var wait = 1000;
 var currentWait = (new Date()).getTime();
   var d = new D();
@@ -77,13 +79,17 @@ var currentWait = (new Date()).getTime();
           //var i =0 ;
           while(!AVI.length < 1 || !AVI == undefined){
             let test = AVI.shift();
-            setTimeout(function(){document.getElementById("Ii-expr").textContent='Inside I machine sending to A: ' +test;},getWaitTime());
+            setTimeout(function(){
+				document.getElementById("Ii-expr").textContent='Inside I machine sending to A: ' +test;},getWaitTime());
                 
             console.log(test);
 
               let lhsrhs = test.split('=');
       console.log(lhsrhs);
-      setTimeout(function(){document.getElementById("Ai-expr").textContent= 'Inside A machine sending to E:' +lhsrhs[1];},getWaitTime());
+      setTimeout(function(){
+		  document.getElementById("Ai-expr").textContent= 'Inside A machine sending to E:' +lhsrhs[1];
+		  document.getElementById("IA").style.borderColor = colorb;
+	  },getWaitTime());
 
               EVI.push(lhsrhs[1]);
               E();
@@ -92,7 +98,10 @@ var currentWait = (new Date()).getTime();
              console.log('avo=' + AVO);
               var sum = AVO.shift();
               IVO.push(sum);
-         setTimeout(function(){document.getElementById("Ao-expr").textContent='Inside A machine setting ' + lhsrhs[0] + " to " +sum;},getWaitTime());
+         setTimeout(function(){
+			 
+			 document.getElementById("Ao-expr").textContent='Inside A machine setting ' + lhsrhs[0] + " to " +sum;
+			 },getWaitTime());
 
               d.set(lhsrhs[0], sum);
               setTimeout(function(){document.getElementById("Io-expr").textContent= 'Inside I machine and we got back: '+sum;},getWaitTime());
@@ -113,12 +122,24 @@ var currentWait = (new Date()).getTime();
               terms.forEach((term) => {
                   console.log("term sent is " + term)
                   if (counter % 2 != 0) {
-          		 setTimeout(function(){ document.getElementById("E-expr").textContent= 'Inside E sending to T1: ' +term;},getWaitTime());
+          		 setTimeout(function(){
+					 document.getElementById("E-expr").textContent= 'Inside E sending to T1: ' +term;
+					 document.getElementById("IA").style.borderColor = colorr;
+					 document.getElementById("AE").style.borderColor = colorb;
+					 document.getElementById("ET1").style.borderColor = colorb;
+					 
+					 },getWaitTime());
+					 
 
                       T1VI.push(term);
                       T1()
                   } else {
-            setTimeout(function(){document.getElementById("E-expr").textContent='Inside E sending to T2: ' + term;},getWaitTime());
+            setTimeout(function(){
+				document.getElementById("E-expr").textContent='Inside E sending to T2: ' + term;
+				document.getElementById("IA").style.borderColor = colorr;
+				document.getElementById("AE").style.borderColor = colorb;
+				document.getElementById("ET2").style.borderColor = colorb;
+				},getWaitTime());
 
                       T2VI.push(term);
                       T2();
@@ -164,7 +185,21 @@ var currentWait = (new Date()).getTime();
                   if (!isNaN(factors[i])) {
                       resultMul = resultMul * factors[i];
                   } else if (factors[i].length > 1) {
-              setTimeout(function(){ document.getElementById("T1-expr").textContent='Inside T1 machine sending to P machine: ' +factors[i];},getWaitTime());
+					  
+				setTimeout(function(){
+					 
+					 document.getElementById("ET1").style.borderColor = colorr;
+                     document.getElementById("ET2").style.borderColor = colorr;
+                     document.getElementById("T2P").style.borderColor = colorr;
+					 document.getElementById("T1D").style.borderColor = colorb;
+					 },getWaitTime());
+              setTimeout(function(){
+				  
+				  document.getElementById("T1D").style.borderColor = colorr;
+                  document.getElementById("ET1").style.borderColor = colorr;
+                  document.getElementById("ET2").style.borderColor = colorr;
+				  document.getElementById("T1-expr").textContent='Inside T1 machine sending to P machine: ' +factors[i];
+				  },getWaitTime());
                       PVI.push(factors[i])
                       P(1);
                       
@@ -193,7 +228,11 @@ var currentWait = (new Date()).getTime();
                   if (!isNaN(factors[i])) {
                       resultMul = resultMul * factors[i];
                   } else if (factors[i].length > 1) {
-               setTimeout(function(){ document.getElementById("T2-expr").textContent='Inside T1 machine sending to P machine: ' + factors[i];},getWaitTime());
+               setTimeout(function(){ 
+			   document.getElementById("T2-expr").textContent='Inside T1 machine sending to P machine: ' + factors[i];
+			   document.getElementById("T1P").style.borderColor = colorr;
+               document.getElementById("T2P").style.borderColor = colorr;
+			   },getWaitTime());
                       PVI.push(factors[i])
                       P(2);
                       resultMul = resultMul * T2VO.shift();
@@ -202,6 +241,11 @@ var currentWait = (new Date()).getTime();
                       resultMul = resultMul * d.gett(factors[i]);
                   }
               }
+			  setTimeout(function () {
+                        document.getElementById("ET1").style.borderColor = colorr;
+                        document.getElementById("ET2").style.borderColor = colorr;
+                        document.getElementById("T2P").style.borderColor = colorb;
+                    }, getWaitTime());
              setTimeout(function(){ document.getElementById("T2o-expr").textContent= 'Inside T2 machine sending back ' +resultMul;},getWaitTime());
               EVO.push(resultMul);
               return;
