@@ -23,15 +23,15 @@ class D {
   var T2VI = [];
   var T2VO = [];
   var PVI = [];
-  $(document).ready(function () {
+/*  $(document).ready(function () {
   
       initdata();
       var input = [];
       input.push('Z=5*X^2+7*Y^3+X*Y') //Z = 215, when {x = 2, y = 3} 
       input.push('A=Z*2+100')//A=530, from previous Z(107)
       I(input);
-  });
-  
+  });*/
+  initdata();  
   function initdata(){
   //var d = new D();
   d.set("A",1);
@@ -71,7 +71,9 @@ class D {
           })
           while (!IVI.length < 1 || !IVI == undefined) {
               var expre = IVI.shift();
-              alert('Inside I machine sending to A: ' + expre);
+           //alert('Inside I machine sending to A: ' + expre);
+           console.log("insideaaaaa");
+              document.getElementById("Ii-expr").textContent=expre;
               AVI.push(expre);
               console.log(AVI);
               A();
@@ -79,7 +81,8 @@ class D {
               
               
               var sum = IVO.shift();
-              alert('Inside I machine and we got back: ' + sum);
+             // alert('Inside I machine and we got back: ' + sum);
+              document.getElementById("Io-expr").textContent=sum;
           }
       }
       
@@ -88,7 +91,9 @@ class D {
           while(!AVI.length < 1 || !AVI == undefined){
               console.log('insideA');
               let lhsrhs = AVI.shift().split('=');
-              alert('Inside A machine sending to E:' + lhsrhs[1]);
+      //        alert('Inside A machine sending to E:' + lhsrhs[1]);
+      document.getElementById("Ai-expr").textContent=lhsrhs[1];
+
               EVI.push(lhsrhs[1]);
               E();
               
@@ -96,7 +101,9 @@ class D {
               var sum = AVO.shift();
               IVO.push(sum);
               //console.log()
-              alert('Inside A machine setting ' + lhsrhs[0] + " to " + sum);
+        //      alert('Inside A machine setting ' + lhsrhs[0] + " to " + sum);
+        document.getElementById("Ao-expr").textContent=sum;
+
               d.set(lhsrhs[0], sum);
               
           }
@@ -117,11 +124,15 @@ class D {
               terms.forEach((term) => {
                   console.log("term sent is " + term)
                   if (counter % 2 != 0) {
-                      alert('Inside E sending to T1: ' + term);
+          //            alert('Inside E sending to T1: ' + term);
+          document.getElementById("E-expr").textContent=term;
+
                       T1VI.push(term);
                       T1()
                   } else {
-                      alert('Inside E sending to T2: ' + term);
+            //          alert('Inside E sending to T2: ' + term);
+            document.getElementById("E-expr").textContent=term;
+
                       T2VI.push(term);
                       T2();
                   }
@@ -145,7 +156,9 @@ class D {
                   break;
               }
               AVO.push(sum);
-              alert('Inside E machine sending back ' + sum);
+              //alert('Inside E machine sending back ' + sum);
+              document.getElementById("Eo-expr").textContent=sum;
+
               
           }
           
@@ -168,7 +181,8 @@ class D {
                   if (!isNaN(factors[i])) {
                       resultMul = resultMul * factors[i];
                   } else if (factors[i].length > 1) {
-                      alert('Inside T1 machine sending to P machine: ' + factors[i]);
+                //      alert('Inside T1 machine sending to P machine: ' + factors[i]);
+                document.getElementById("T1-expr").textContent=factors[i];
                       PVI.push(factors[i])
                       P(1);
                       
@@ -181,7 +195,8 @@ class D {
                       resultMul = resultMul * d.gett(factors[i]);
                   }
               }
-              alert('Inside T1 machine sending back ' + resultMul);
+              //alert('Inside T1 machine sending back ' + resultMul);
+              document.getElementById("T1o-expr").textContent=resultMul;
               EVO.push(resultMul);
               //E();
               return;
@@ -202,7 +217,8 @@ class D {
                   if (!isNaN(factors[i])) {
                       resultMul = resultMul * factors[i];
                   } else if (factors[i].length > 1) {
-                      alert('Inside T1 machine sending to P machine: ' + factors[i]);
+                //     alert('Inside T1 machine sending to P machine: ' + factors[i]);
+                document.getElementById("T2-expr").textContent=factors[i];
                       PVI.push(factors[i])
                       P(2);
                       resultMul = resultMul * T2VO.shift();
@@ -212,7 +228,8 @@ class D {
                       resultMul = resultMul * d.gett(factors[i]);
                   }
               }
-              alert('Inside T2 machine sending back ' + resultMul);
+              //alert('Inside T2 machine sending back ' + resultMul);
+              document.getElementById("T2o-expr").textContent=resultMul;
               EVO.push(resultMul);
               //E();
               return;
@@ -242,10 +259,19 @@ class D {
                   T2VO.push(val);
               }
               
-              alert('Inside P machine sending back: ' + val);
+              //alert('Inside P machine sending back: ' + val);
+              document.getElementById("Pi-expr").textContent=val;
               return;
               
       }
   }	
-  
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+    //alert("woke up!");
+}
   
