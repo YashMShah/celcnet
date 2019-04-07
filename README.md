@@ -28,4 +28,4 @@ Click on submit button to run the program.
 The status of all the machines can be seen on the left of input parameters on web page.
 The inputs received by machines, forwarding outputs to next machine, etc.
 The final output result is displayed in the Input Machine.
-Techs used: HTML5, CSS 3.0, Javascript, JQuery, Bootstrap.
+Techs used: HTML, CSS, Javascript, JQuery.
