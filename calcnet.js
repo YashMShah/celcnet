@@ -1,3 +1,5 @@
+// Javascript file includes logic
+//Authors: Abbas Gulabiwala, Srikanth Krishna Kolli, Yash Shah
 class D {
     constructor() {
       this.variable1 = {};
@@ -11,8 +13,8 @@ class D {
   }
   var colorb = '#0000FF';
   var colorr = '#FF0000';
-  var wait = 1000;
-var currentWait = (new Date()).getTime();
+  var delay = 1000;
+var timedelay = (new Date()).getTime();
   var d = new D();
   var IVI = [];
   var IVO = [];
@@ -20,7 +22,7 @@ var currentWait = (new Date()).getTime();
   var AVO = [];
   var EVI = [];
   var EVO = [];
-  var explen;
+  var expressionlength;
   var T1VI = [];
   var T1VO = [];
   var T2VI = [];
@@ -60,18 +62,15 @@ var currentWait = (new Date()).getTime();
     function I(statement) {
           statement.forEach((expression) => {
               IVI.push(expression);
-              console.log(IVI);
           })
           while (!IVI.length < 1 || !IVI == undefined) {
               var expre = IVI.shift();
-           console.log(expre);
               AVI.push(expre);
-              console.log(AVI);
 		       A();
               
               
               
-              var sum = IVO.shift();
+              var addtn = IVO.shift();
           }
       }
       
@@ -82,15 +81,13 @@ var currentWait = (new Date()).getTime();
             setTimeout(function(){
 				document.getElementById("Iinput").textContent='Sending to A: ' +test;},TimeOut());
                 
-            console.log(test);
 
-              let lhsrhs = test.split('=');
-      console.log(lhsrhs);
+              let exprsides = test.split('=');
 	  
 	  setTimeout(function(){document.getElementById("ITOA").style.borderColor = colorb},TimeOut());
  
       setTimeout(function(){
-		  document.getElementById("Ainput").textContent= 'Sending to E:' +lhsrhs[1];
+		  document.getElementById("Ainput").textContent= 'Sending to E:' +exprsides[1];
 	  },TimeOut());
 	  
 	  setTimeout(function(){document.getElementById("ITOA").style.borderColor = colorr},TimeOut());
@@ -103,24 +100,23 @@ var currentWait = (new Date()).getTime();
 				},TimeOut());
 			
 
-              EVI.push(lhsrhs[1]);
+              EVI.push(exprsides[1]);
               E();
 				 setTimeout(function(){document.getElementById("ATOE").style.borderColor = colorr},TimeOut());
  
 
-             console.log('avo=' + AVO);
-              var sum = AVO.shift();
-              IVO.push(sum);
+              var addtn = AVO.shift();
+              IVO.push(addtn);
          setTimeout(function(){
 			 
-			 document.getElementById("Aoutput").textContent='Setting ' + lhsrhs[0] + " to " +sum;
+			 document.getElementById("Aoutput").textContent='Setting ' + exprsides[0] + " to " +addtn;
 			 },TimeOut());
 
-              d.set(lhsrhs[0], sum);
+              d.set(exprsides[0], addtn);
 			   setTimeout(function(){document.getElementById("ITOA").style.borderColor = colorb},TimeOut());
 				setTimeout(function(){document.getElementById("ITOA").style.borderColor = colorr},TimeOut());
  
-              setTimeout(function(){document.getElementById("Ioutput").textContent= 'Answer Received: '+sum;},TimeOut());
+              setTimeout(function(){document.getElementById("Ioutput").textContent= 'Answer Received: '+addtn;},TimeOut());
 			
 		  }
           
@@ -130,57 +126,53 @@ var currentWait = (new Date()).getTime();
       function E(){
           while(!EVI.length < 1 || !EVI == undefined){
               
-              let terms = EVI.shift().split('+');
-              explen = terms.length;
-              console.log('terms' + terms);
-              console.log("Expre len " + explen);
-              let counter = 1;
-              terms.forEach((term) => {
-                  console.log("term sent is " + term)
-                  if (counter % 2 != 0) {
+              let words = EVI.shift().split('+');
+              expressionlength = words.length;
+              let cnt = 1;
+              words.forEach((word) => {
+                  if (cnt % 2 != 0) {
           		 setTimeout(function(){
-					 document.getElementById("Einput").textContent= 'Sending to T1: ' +term;
+					 document.getElementById("Einput").textContent= 'Sending to T1: ' +word;
 					 document.getElementById("ITOA").style.borderColor = colorr;
 					 document.getElementById("ATOE").style.borderColor = colorb;
 					 },TimeOut());
 	
 					 setTimeout(function(){document.getElementById("ATOE").style.borderColor = colorr},TimeOut());
 
-                      T1VI.push(term);
+                      T1VI.push(word);
                       T1()
 					 setTimeout(function(){document.getElementById("ETOT1").style.borderColor = colorr},TimeOut());
  
                   } else {
             setTimeout(function(){
-				document.getElementById("Einput").textContent='Sending to T2: ' + term;
+				document.getElementById("Einput").textContent='Sending to T2: ' + word;
 				},TimeOut());
 				
 					 setTimeout(function(){document.getElementById("ATOE").style.borderColor = colorr;document.getElementById("ETOT2").style.borderColor = colorb;},TimeOut());
 
 
-                      T2VI.push(term);
+                      T2VI.push(word);
                       T2();
 					  setTimeout(function(){document.getElementById("ETOT2").style.borderColor = colorr},TimeOut());
  
                   }
-                  counter++;
+                  cnt++;
               })
         
               
           }
           
           while (!EVO.length < 1 || !EVO == undefined) {
-              let sum = 0;
-              if (EVO.length == explen) {
+              let addtn = 0;
+              if (EVO.length == expressionlength) {
                   while (!EVO.length < 1 || !EVO == undefined) {
-                      sum += EVO.shift();
+                      addtn += EVO.shift();
                   }
-                  console.log(sum);
               } else {
                   break;
               }
-              AVO.push(sum);
-              setTimeout(function(){document.getElementById("Eoutput").textContent='Sending Return: ' + sum;},TimeOut());
+              AVO.push(addtn);
+              setTimeout(function(){document.getElementById("Eoutput").textContent='Sending Return: ' + addtn;},TimeOut());
 
               
           }
@@ -198,22 +190,21 @@ var currentWait = (new Date()).getTime();
       
       function T1(){
           while(!T1VI.length < 1 || !T1VI == undefined){
-              let term = T1VI.shift();
-              console.log("term is " + term)
-              let factors = term.split('*');
-              let resultMul = 1;
+              let word = T1VI.shift();
+              let parts = word.split('*');
+              let tresult = 1;
               setTimeout(function(){
 					 
 					 document.getElementById("ETOT1").style.borderColor = colorb;
     				 },TimeOut());
-              for (let i = 0; i < factors.length; i++) {
-                  if (!isNaN(factors[i])) {
-                      resultMul = resultMul * factors[i];
-                  } else if (factors[i].length > 1) {
+              for (let i = 0; i < parts.length; i++) {
+                  if (!isNaN(parts[i])) {
+                      tresult = tresult * parts[i];
+                  } else if (parts[i].length > 1) {
 					  
 				
               setTimeout(function(){
-				  document.getElementById("T1input").textContent='Sending to P machine: ' +factors[i];
+				  document.getElementById("T1input").textContent='Sending to P machine: ' +parts[i];
 				  },TimeOut());
 				
 				setTimeout(function(){document.getElementById("ETOT1").style.borderColor = colorr;
@@ -226,7 +217,7 @@ var currentWait = (new Date()).getTime();
 				setTimeout(function(){document.getElementById("T2TOP").style.borderColor = colorr;
 				  },TimeOut());
 				  
-                      PVI.push(factors[i])
+                      PVI.push(parts[i])
                       P(1);
                       
 				setTimeout(function(){document.getElementById("T2TOP").style.borderColor = colorb;
@@ -236,15 +227,13 @@ var currentWait = (new Date()).getTime();
 				  },TimeOut());
 				
 				
-                      console.log("Out of P with x = 4  ");
-                      resultMul = resultMul * T1VO.shift();
-                      console.log("result is " + resultMul);
+                      tresult = tresult * T1VO.shift();
                   } else {
-                      resultMul = resultMul * d.gett(factors[i]);
+                      tresult = tresult * d.gett(parts[i]);
                   }
               }
-             setTimeout(function(){ document.getElementById("T1output").textContent='Sending Return: ' + resultMul;},TimeOut());
-              EVO.push(resultMul);
+             setTimeout(function(){ document.getElementById("T1output").textContent='Sending Return: ' + tresult;},TimeOut());
+              EVO.push(tresult);
 			  setTimeout(function(){document.getElementById("ETOT1").style.borderColor = colorr},TimeOut());
  
 			  setTimeout(function(){document.getElementById("ETOT1").style.borderColor = colorb},TimeOut());
@@ -257,16 +246,16 @@ var currentWait = (new Date()).getTime();
       
       function T2(){
           while(!T2VI.length < 1 || !T2VI == undefined){
-              let term = T2VI.shift();
-              let factors = term.split('*');
-              let resultMul = 1;
+              let word = T2VI.shift();
+              let parts = word.split('*');
+              let tresult = 1;
               
-              for (let i = 0; i < factors.length; i++) {
-                  if (!isNaN(factors[i])) {
-                      resultMul = resultMul * factors[i];
-                  } else if (factors[i].length > 1) {
+              for (let i = 0; i < parts.length; i++) {
+                  if (!isNaN(parts[i])) {
+                      tresult = tresult * parts[i];
+                  } else if (parts[i].length > 1) {
                setTimeout(function(){ 
-			   document.getElementById("T2input").textContent='Sending to P machine: ' + factors[i];
+			   document.getElementById("T2input").textContent='Sending to P machine: ' + parts[i];
 			   },TimeOut());
 			   
 			   setTimeout(function(){document.getElementById("ETOT2").style.borderColor = colorr;
@@ -279,7 +268,7 @@ var currentWait = (new Date()).getTime();
 				setTimeout(function(){document.getElementById("T1TOP").style.borderColor = colorr;
 				  },TimeOut());
 				
-                      PVI.push(factors[i])
+                      PVI.push(parts[i])
                       P(2);
 					  
 					  setTimeout(function(){document.getElementById("T1TOP").style.borderColor = colorb;
@@ -287,14 +276,13 @@ var currentWait = (new Date()).getTime();
 				  
 				  setTimeout(function(){document.getElementById("T1TOP").style.borderColor = colorr;
 				  },TimeOut());
-                      resultMul = resultMul * T2VO.shift();
-                      console.log("result is " + resultMul);
+                      tresult = tresult * T2VO.shift();
                   } else {
-                      resultMul = resultMul * d.gett(factors[i]);
+                      tresult = tresult * d.gett(parts[i]);
                   }
               }
-	         setTimeout(function(){ document.getElementById("T2output").textContent= 'Sending Return: ' +resultMul;},TimeOut());
-              EVO.push(resultMul);
+	         setTimeout(function(){ document.getElementById("T2output").textContent= 'Sending Return: ' +tresult;},TimeOut());
+              EVO.push(tresult);
 			  setTimeout(function(){document.getElementById("ETOT2").style.borderColor = colorr},TimeOut());
  
 			  setTimeout(function(){document.getElementById("ETOT2").style.borderColor = colorb},TimeOut());
@@ -307,39 +295,37 @@ var currentWait = (new Date()).getTime();
       
   function P(variable){
       while(!PVI.length < 1 || !PVI == undefined){
-          let numPow = PVI.shift().split('^');
-          let val = 0;
-          console.log("calc power for " + numPow[0] + " ^ " + numPow[1])
-          if (isNaN(numPow[0])) {
-                  console.log(numPow[0]);
-                  console.log(d);
-                  val = Math.pow(d.gett(numPow[0]), numPow[1]);
+          let powernum = PVI.shift().split('^');
+          let pval = 0;
+          if (isNaN(powernum[0])) {
+                  pval = Math.pow(d.gett(powernum[0]), powernum[1]);
               } else {
-                  val = Math.pow(numPow[0], numPow[1]);
+                  pval = Math.pow(powernum[0], powernum[1]);
               }
           if(variable == 1) {
 			  
-                  T1VO.push(val);
+                  T1VO.push(pval);
               }
               else {
 				
-                  T2VO.push(val);
+                  T2VO.push(pval);
               }
               
-      setTimeout(function(){document.getElementById("Pinput").textContent='Sending Return: ' + val;},TimeOut());
+      setTimeout(function(){document.getElementById("Pinput").textContent='Sending Return: ' + pval;},TimeOut());
               return;
               
       }
-  }	
+  }
+  
+  //https://www.w3schools.com/jsref/met_win_settimeout.asp
+//timeout function to delay the displaying of elements in the machines.
   function TimeOut() {
-    var now = (new Date()).getTime();
-    //If we passed the current wait time, then wait from now
-    if(now > currentWait) {
-        currentWait = now + wait;
+    var time = (new Date()).getTime();
+    if(time > timedelay) {
+        timedelay = time + delay;
     }
-    //A set time is still ongoing, then wait when that is completed
     else {
-        currentWait = currentWait + wait;
+        timedelay = timedelay + delay;
     }
-    return currentWait - now;
+    return timedelay - time;
 }

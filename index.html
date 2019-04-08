@@ -1,3 +1,5 @@
+<!-- HTML FILE includes internal CSS
+Authors: Abbas Gulabiwala, Srikanth Krishna Kolli, Yash Shah -->
 <!DOCTYPE html>
 <head>
 
@@ -12,7 +14,7 @@
 	function evalExpr(form) {
 	
 	if(form.expr1.value.length == 0 && form.expr2.value.length == "" && form.expr3.value.length == 0 && form.expr4.value.length == 0 && form.expr5.value.length == 0) {
-                alert("Atleast one experience is required.");
+                alert("Enter atleast one expression.");
                 return false;
             }
 	var exprInputs= [];
@@ -22,7 +24,7 @@
 
                 if (form[expressions].value !== "") {
                     if ((/^[^\s@]+\.$/.test(form[expressions].value)) === false) {
-                        alert("The input expressions must end with period mark.");
+                        alert("Please insert a . at the end of the expression");
                         return false;
                     }
                     exprInputs.push(form[expressions].value);
